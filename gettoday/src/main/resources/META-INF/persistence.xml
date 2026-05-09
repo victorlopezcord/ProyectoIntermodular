@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence           http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+  <persistence-unit name="GetToDay_demo_jar_0.0.1-SNAPSHOTPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>GetToDay.entity.Empleados</class>
+    <class>GetToDay.entity.Usuarios</class>
+    <class>GetToDay.entity.Negocios</class>
+    <class>GetToDay.entity.Citas</class>
+    <class>GetToDay.entity.Servicios</class>
+    <class>GetToDay.entity.Horarios</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://143.47.60.81:3306/get_today?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
+      <property name="javax.persistence.jdbc.user" value="ocp"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="ProyectoDAM2026."/>
+    </properties>
+  </persistence-unit>
+</persistence>
