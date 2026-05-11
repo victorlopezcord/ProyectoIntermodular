@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fondo_pantalla"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="20dp"
+        android:paddingTop="24dp"
+        android:paddingBottom="40dp">
+
+        <!-- ── FLECHA ATRÁS + TÍTULO ───────────── -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="24dp">
+
+            <Button
+                android:id="@+id/btnVolver"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="← Volver"
+                style="@style/GetToDay.Button.Text"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Crear cuenta"
+                android:textSize="22sp"
+                android:textColor="@color/azul_oscuro"
+                android:textStyle="bold"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+        <!-- ── CARD: DATOS PERSONALES ─────────── -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/GetToDay.Card"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Datos personales"
+                    android:textSize="16sp"
+                    android:textColor="@color/azul_oscuro"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="20dp"/>
+
+                <!-- Nombre completo -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layoutNombre"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/GetToDay.Input"
+                    android:hint="Nombre completo"
+                    android:layout_marginBottom="14dp">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etNombre"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:imeOptions="actionNext"
+                        android:maxLines="1"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Email -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layoutEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/GetToDay.Input"
+                    android:hint="Correo electrónico"
+                    app:endIconMode="clear_text"
+                    android:layout_marginBottom="14dp">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textEmailAddress"
+                        android:imeOptions="actionNext"
+                        android:maxLines="1"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Teléfono -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layoutTelefono"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/GetToDay.Input"
+                    android:hint="Teléfono"
+                    android:layout_marginBottom="14dp">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etTelefono"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="phone"
+                        android:imeOptions="actionNext"
+                        android:maxLines="1"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Contraseña -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layoutPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/GetToDay.Input"
+                    android:hint="Contraseña"
+                    app:endIconMode="password_toggle"
+                    android:layout_marginBottom="14dp">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPassword"
+                        android:imeOptions="actionNext"
+                        android:maxLines="1"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Confirmar contraseña -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layoutPasswordConfirm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/GetToDay.Input"
+                    android:hint="Confirmar contraseña"
+                    app:endIconMode="password_toggle">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etPasswordConfirm"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPassword"
+                        android:imeOptions="actionDone"
+                        android:maxLines="1"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- ── CARD: TIPO DE CUENTA ────────────── -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/GetToDay.Card"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tipo de cuenta"
+                    android:textSize="16sp"
+                    android:textColor="@color/azul_oscuro"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="¿Eres cliente o negocio?"
+                    android:textSize="13sp"
+                    android:textColor="@color/texto_secundario"
+                    android:layout_marginBottom="16dp"/>
+
+                <!-- Toggle de selección de rol -->
+                <com.google.android.material.button.MaterialButtonToggleGroup
+                    android:id="@+id/toggleRol"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:singleSelection="true"
+                    app:selectionRequired="true">
+
+                    <Button
+                        android:id="@+id/btnRolCliente"
+                        android:layout_width="0dp"
+                        android:layout_height="52dp"
+                        android:layout_weight="1"
+                        android:text="Soy cliente"
+                        style="?attr/materialButtonOutlinedStyle"/>
+
+                    <Button
+                        android:id="@+id/btnRolNegocio"
+                        android:layout_width="0dp"
+                        android:layout_height="52dp"
+                        android:layout_weight="1"
+                        android:text="Soy negocio"
+                        style="?attr/materialButtonOutlinedStyle"/>
+
+                </com.google.android.material.button.MaterialButtonToggleGroup>
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- ── CARD: DATOS DEL NEGOCIO ─────────── -->
+        <!--
+            Esta card empieza OCULTA (visibility="gone").
+            Se muestra en Java cuando el usuario pulsa "Soy negocio".
+        -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardDatosNegocio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/GetToDay.Card"
+            android:layout_marginBottom="16dp"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Datos de tu negocio"
+                    android:textSize="16sp"
+                    android:textColor="@color/azul_oscuro"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="20dp"/>
+
+                <!-- Nombre del local -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layoutNombreLocal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/GetToDay.Input"
+                    android:hint="Nombre del local"
+                    android:layout_marginBottom="14dp">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etNombreLocal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textCapWords"
+                        android:imeOptions="actionNext"
+                        android:maxLines="1"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Dirección -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layoutDireccion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/GetToDay.Input"
+                    android:hint="Dirección"
+                    android:layout_marginBottom="14dp">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etDireccion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPostalAddress"
+                        android:imeOptions="actionNext"
+                        android:maxLines="1"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Descripción -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layoutDescripcion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/GetToDay.Input"
+                    android:hint="Descripción del negocio"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="200">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etDescripcion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textMultiLine"
+                        android:minLines="3"
+                        android:maxLines="5"
+                        android:maxLength="200"
+                        android:gravity="top"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- ── BOTÓN CREAR CUENTA ──────────────── -->
+        <Button
+            android:id="@+id/btnCrearCuenta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Crear cuenta"
+            style="@style/GetToDay.Button.Primary"
+            android:layout_marginTop="8dp"/>
+
+    </LinearLayout>
+</ScrollView>

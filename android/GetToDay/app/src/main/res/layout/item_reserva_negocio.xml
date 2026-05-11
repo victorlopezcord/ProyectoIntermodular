@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    style="@style/GetToDay.Card"
+    android:layout_marginBottom="12dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Fila: nombre cliente + chip estado -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="8dp">
+
+            <!-- Nombre del cliente -->
+            <TextView
+                android:id="@+id/tvNombreCliente"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Nombre del cliente"
+                android:textSize="16sp"
+                android:textColor="@color/azul_oscuro"
+                android:textStyle="bold"/>
+
+            <!-- Chip estado: siempre verde porque
+                 estas citas son siempre confirmadas -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Confirmada"
+                android:textSize="11sp"
+                android:textColor="@color/estado_confirmada"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="4dp"
+                android:background="@drawable/bg_chip_estado"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <!-- Línea divisora -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/borde_campo"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Servicio -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="6dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Servicio"
+                android:textSize="13sp"
+                android:textColor="@color/texto_secundario"/>
+
+            <TextView
+                android:id="@+id/tvServicio"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="—"
+                android:textSize="13sp"
+                android:textColor="@color/texto_primario"/>
+
+        </LinearLayout>
+
+        <!-- Fecha -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="6dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Fecha"
+                android:textSize="13sp"
+                android:textColor="@color/texto_secundario"/>
+
+            <TextView
+                android:id="@+id/tvFecha"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="—"
+                android:textSize="13sp"
+                android:textColor="@color/texto_primario"/>
+
+        </LinearLayout>
+
+        <!-- Hora -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="6dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Hora"
+                android:textSize="13sp"
+                android:textColor="@color/texto_secundario"/>
+
+            <TextView
+                android:id="@+id/tvHora"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="—"
+                android:textSize="13sp"
+                android:textColor="@color/texto_primario"/>
+
+        </LinearLayout>
+
+        <!-- Duración fija: 1 hora -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Duración"
+                android:textSize="13sp"
+                android:textColor="@color/texto_secundario"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="1 hora"
+                android:textSize="13sp"
+                android:textColor="@color/texto_primario"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

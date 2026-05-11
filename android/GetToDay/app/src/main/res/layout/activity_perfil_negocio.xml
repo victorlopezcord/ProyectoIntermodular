@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fondo_pantalla"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="20dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="80dp">
+
+        <!-- ── TÍTULO ─────────────────────────── -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mi perfil"
+            android:textSize="22sp"
+            android:textColor="@color/azul_oscuro"
+            android:textStyle="bold"
+            android:layout_marginBottom="20dp"/>
+
+        <!-- ── CARD: DATOS EN MODO VISTA ─────── -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardVista"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/GetToDay.Card"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <!-- Fila título + botón editar -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="16dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Datos del negocio"
+                        android:textSize="16sp"
+                        android:textColor="@color/azul_oscuro"
+                        android:textStyle="bold"/>
+
+                    <Button
+                        android:id="@+id/btnEditar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Editar"
+                        style="@style/GetToDay.Button.Secondary"
+                        android:paddingHorizontal="16dp"/>
+
+                </LinearLayout>
+
+                <!-- Nombre negocio -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Nombre"
+                        android:textSize="13sp"
+                        android:textColor="@color/texto_secundario"/>
+
+                    <TextView
+                        android:id="@+id/tvNombreNegocioPerfil"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="—"
+                        android:textSize="14sp"
+                        android:textColor="@color/texto_primario"/>
+
+                </LinearLayout>
+
+                <!-- Dirección -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Dirección"
+                        android:textSize="13sp"
+                        android:textColor="@color/texto_secundario"/>
+
+                    <TextView
+                        android:id="@+id/tvDireccionNegocioPerfil"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="—"
+                        android:textSize="14sp"
+                        android:textColor="@color/texto_primario"/>
+
+                </LinearLayout>
+
+                <!-- Descripción -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="16dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Descripción"
+                        android:textSize="13sp"
+                        android:textColor="@color/texto_secundario"/>
+
+                    <TextView
+                        android:id="@+id/tvDescripcionNegocioPerfil"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="—"
+                        android:textSize="14sp"
+                        android:textColor="@color/texto_primario"/>
+
+                </LinearLayout>
+
+                <!-- Línea divisora -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/borde_campo"
+                    android:layout_marginBottom="16dp"/>
+
+                <!-- Subtítulo propietario -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Datos del propietario"
+                    android:textSize="14sp"
+                    android:textColor="@color/azul_oscuro"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="12dp"/>
+
+                <!-- Nombre propietario -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Nombre"
+                        android:textSize="13sp"
+                        android:textColor="@color/texto_secundario"/>
+
+                    <TextView
+                        android:id="@+id/tvNombreUsuario"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="—"
+                        android:textSize="14sp"
+                        android:textColor="@color/texto_primario"/>
+
+                </LinearLayout>
+
+                <!-- Email propietario -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Email"
+                        android:textSize="13sp"
+                        android:textColor="@color/texto_secundario"/>
+
+                    <TextView
+                        android:id="@+id/tvEmailUsuario"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="—"
+                        android:textSize="14sp"
+                        android:textColor="@color/texto_primario"/>
+
+                </LinearLayout>
+
+                <!-- Teléfono propietario -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Teléfono"
+                        android:textSize="13sp"
+                        android:textColor="@color/texto_secundario"/>
+
+                    <TextView
+                        android:id="@+id/tvTelefonoUsuario"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="—"
+                        android:textSize="14sp"
+                        android:textColor="@color/texto_primario"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- ── CARD: DATOS EN MODO EDICIÓN ────── -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardEdicion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/GetToDay.Card"
+            android:layout_marginBottom="16dp"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Editar datos"
+                    android:textSize="16sp"
+                    android:textColor="@color/azul_oscuro"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="20dp"/>
+
+                <!-- Nombre negocio editable -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layoutNombreNegocioEditar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/GetToDay.Input"
+                    android:hint="Nombre del negocio"
+                    android:layout_marginBottom="14dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etNombreNegocioEditar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textCapWords"
+                        android:imeOptions="actionNext"
+                        android:maxLines="1"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Dirección editable -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layoutDireccionEditar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/GetToDay.Input"
+                    android:hint="Dirección"
+                    android:layout_marginBottom="14dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etDireccionEditar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPostalAddress"
+                        android:imeOptions="actionNext"
+                        android:maxLines="1"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Descripción editable -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layoutDescripcionEditar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/GetToDay.Input"
+                    android:hint="Descripción"
+                    android:layout_marginBottom="14dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etDescripcionEditar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textMultiLine"
+                        android:minLines="2"
+                        android:maxLines="4"
+                        android:gravity="top"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Línea divisora -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/borde_campo"
+                    android:layout_marginBottom="14dp"/>
+
+                <!-- Nombre propietario editable -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layoutNombreUsuarioEditar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/GetToDay.Input"
+                    android:hint="Nombre del propietario"
+                    android:layout_marginBottom="14dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etNombreUsuarioEditar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:imeOptions="actionNext"
+                        android:maxLines="1"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Teléfono editable -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layoutTelefonoEditar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/GetToDay.Input"
+                    android:hint="Teléfono"
+                    android:layout_marginBottom="20dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etTelefonoEditar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="phone"
+                        android:imeOptions="actionDone"
+                        android:maxLines="1"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Botones guardar y cancelar -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btnCancelar"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Cancelar"
+                        style="@style/GetToDay.Button.Secondary"
+                        android:layout_marginEnd="8dp"/>
+
+                    <Button
+                        android:id="@+id/btnGuardar"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Guardar"
+                        style="@style/GetToDay.Button.Primary"
+                        android:layout_marginStart="8dp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- ── CARD: CERRAR SESIÓN ────────────── -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/GetToDay.Card">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sesión"
+                    android:textSize="16sp"
+                    android:textColor="@color/azul_oscuro"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="16dp"/>
+
+                <Button
+                    android:id="@+id/btnCerrarSesion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Cerrar sesión"
+                    style="@style/GetToDay.Button.Secondary"
+                    android:backgroundTint="@color/estado_cancelada"
+                    android:textColor="@color/blanco"/>
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+</ScrollView>

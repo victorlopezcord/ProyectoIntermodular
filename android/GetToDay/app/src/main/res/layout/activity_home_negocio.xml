@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fondo_pantalla"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="20dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="80dp">
+
+        <!-- ── CARD: DATOS DEL NEGOCIO ────────── -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/GetToDay.Card"
+            android:layout_marginBottom="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <!-- Fila: título + botón editar -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="16dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Mi negocio"
+                        android:textSize="18sp"
+                        android:textColor="@color/azul_oscuro"
+                        android:textStyle="bold"/>
+
+                    <Button
+                        android:id="@+id/btnEditarNegocio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Editar"
+                        style="@style/GetToDay.Button.Secondary"
+                        android:paddingHorizontal="16dp"/>
+
+                </LinearLayout>
+
+                <!-- Nombre -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Nombre"
+                        android:textSize="13sp"
+                        android:textColor="@color/texto_secundario"/>
+
+                    <TextView
+                        android:id="@+id/tvNombreNegocio"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="—"
+                        android:textSize="14sp"
+                        android:textColor="@color/texto_primario"/>
+
+                </LinearLayout>
+
+                <!-- Dirección -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Dirección"
+                        android:textSize="13sp"
+                        android:textColor="@color/texto_secundario"/>
+
+                    <TextView
+                        android:id="@+id/tvDireccionNegocio"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="—"
+                        android:textSize="14sp"
+                        android:textColor="@color/texto_primario"/>
+
+                </LinearLayout>
+
+                <!-- Descripción -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Descripción"
+                        android:textSize="13sp"
+                        android:textColor="@color/texto_secundario"/>
+
+                    <TextView
+                        android:id="@+id/tvDescripcionNegocio"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="—"
+                        android:textSize="14sp"
+                        android:textColor="@color/texto_primario"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- ── TÍTULO CITAS DE HOY ────────────── -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reservas confirmadas para hoy"
+            android:textSize="18sp"
+            android:textColor="@color/azul_oscuro"
+            android:textStyle="bold"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- ── ESTADO VACÍO HOY ───────────────── -->
+        <TextView
+            android:id="@+id/tvSinReservasHoy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No hay reservas confirmadas para hoy"
+            android:textSize="14sp"
+            android:textColor="@color/texto_secundario"
+            android:gravity="center"
+            android:paddingVertical="16dp"
+            android:visibility="gone"/>
+
+        <!-- ── LISTA DE CITAS DE HOY ──────────── -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerReservasHoy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- ── TÍTULO CITAS DE MAÑANA ─────────── -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reservas confirmadas para mañana"
+            android:textSize="18sp"
+            android:textColor="@color/azul_oscuro"
+            android:textStyle="bold"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- ── ESTADO VACÍO MAÑANA ───────────── -->
+        <TextView
+            android:id="@+id/tvSinReservasManana"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No hay reservas confirmadas para mañana"
+            android:textSize="14sp"
+            android:textColor="@color/texto_secundario"
+            android:gravity="center"
+            android:paddingVertical="16dp"
+            android:visibility="gone"/>
+
+        <!-- ── LISTA DE CITAS DE MAÑANA ──────── -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerReservasManana"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"/>
+
+    </LinearLayout>
+</ScrollView>
