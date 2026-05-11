@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fondo_pantalla"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="20dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="80dp">
+
+        <!-- ── TÍTULO ─────────────────────────── -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nueva reserva"
+            android:textSize="22sp"
+            android:textColor="@color/azul_oscuro"
+            android:textStyle="bold"
+            android:layout_marginBottom="20dp"/>
+
+        <!-- ── CARD: PASO 1 — ELEGIR NEGOCIO ──── -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/GetToDay.Card"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1. Elige un negocio"
+                    android:textSize="16sp"
+                    android:textColor="@color/azul_oscuro"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="16dp"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layoutSpinnerNegocio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:hint="Selecciona un negocio">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/spinnerNegocio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="none"
+                        android:focusable="false"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- ── CARD: INFO DEL NEGOCIO ─────────── -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardInfoNegocio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/GetToDay.Card"
+            android:layout_marginBottom="16dp"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Datos del negocio"
+                    android:textSize="16sp"
+                    android:textColor="@color/azul_oscuro"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="12dp"/>
+
+                <!-- Nombre -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="8dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Nombre"
+                        android:textSize="13sp"
+                        android:textColor="@color/texto_secundario"/>
+
+                    <TextView
+                        android:id="@+id/tvNombreNegocio"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="—"
+                        android:textSize="13sp"
+                        android:textColor="@color/texto_primario"/>
+
+                </LinearLayout>
+
+                <!-- Dirección -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="8dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Dirección"
+                        android:textSize="13sp"
+                        android:textColor="@color/texto_secundario"/>
+
+                    <TextView
+                        android:id="@+id/tvDireccionNegocio"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="—"
+                        android:textSize="13sp"
+                        android:textColor="@color/texto_primario"/>
+
+                </LinearLayout>
+
+                <!-- Descripción -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Descripción"
+                        android:textSize="13sp"
+                        android:textColor="@color/texto_secundario"/>
+
+                    <TextView
+                        android:id="@+id/tvDescripcionNegocio"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="—"
+                        android:textSize="13sp"
+                        android:textColor="@color/texto_primario"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- ── CARD: PASO 2 — ELEGIR SERVICIO ─── -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardServicio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/GetToDay.Card"
+            android:layout_marginBottom="16dp"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2. Elige un servicio"
+                    android:textSize="16sp"
+                    android:textColor="@color/azul_oscuro"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp"/>
+
+                <!-- Nota de duración fija -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Todos los servicios tienen una duración de 1 hora"
+                    android:textSize="12sp"
+                    android:textColor="@color/texto_secundario"
+                    android:layout_marginBottom="16dp"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layoutSpinnerServicio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:hint="Selecciona un servicio">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/spinnerServicio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="none"
+                        android:focusable="false"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- ── CARD: PASO 3 — ELEGIR HORARIO ──── -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardHorarios"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/GetToDay.Card"
+            android:layout_marginBottom="16dp"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3. Elige un horario disponible"
+                    android:textSize="16sp"
+                    android:textColor="@color/azul_oscuro"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="16dp"/>
+
+                <!-- Lista de horarios disponibles -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerHorarios"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"/>
+
+                <!-- Sin horarios disponibles -->
+                <TextView
+                    android:id="@+id/tvSinHorarios"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="No hay horarios disponibles para este servicio"
+                    android:textSize="14sp"
+                    android:textColor="@color/texto_secundario"
+                    android:gravity="center"
+                    android:paddingVertical="16dp"
+                    android:visibility="gone"/>
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- ── BOTÓN RESERVAR ─────────────────── -->
+        <!--
+            Visible cuando el cliente elige un horario.
+            La reserva queda automáticamente confirmada.
+            No necesita aprobación del negocio.
+        -->
+        <Button
+            android:id="@+id/btnReservar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Confirmar reserva"
+            style="@style/GetToDay.Button.Primary"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+</ScrollView>

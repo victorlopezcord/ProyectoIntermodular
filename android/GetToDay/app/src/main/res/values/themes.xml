@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Tema base de la app -->
+    <style name="Theme.GetToDay" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Color principal: azul oscuro -->
+        <item name="colorPrimary">@color/azul_oscuro</item>
+        <item name="colorPrimaryVariant">@color/azul_oscuro</item>
+        <!-- Color de acento -->
+        <item name="colorSecondary">@color/azul_medio</item>
+        <!-- Fondo general de todas las pantallas -->
+        <item name="android:windowBackground">@color/fondo_pantalla</item>
+        <!-- Sin barra de acción nativa, usaremos Toolbars propios -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <!-- Botón principal: azul oscuro con texto blanco -->
+    <style name="GetToDay.Button.Primary" parent="Widget.MaterialComponents.Button">
+        <item name="android:backgroundTint">@color/azul_oscuro</item>
+        <item name="android:textColor">@color/blanco</item>
+        <item name="android:paddingTop">14dp</item>
+        <item name="android:paddingBottom">14dp</item>
+        <item name="cornerRadius">12dp</item>
+        <item name="elevation">4dp</item>
+    </style>
+
+    <!-- Botón secundario: solo contorno azul sin relleno -->
+    <style name="GetToDay.Button.Secondary" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textColor">@color/azul_medio</item>
+        <item name="strokeColor">@color/azul_medio</item>
+        <item name="strokeWidth">1.5dp</item>
+        <item name="android:paddingTop">14dp</item>
+        <item name="android:paddingBottom">14dp</item>
+        <item name="cornerRadius">12dp</item>
+    </style>
+
+    <!-- Botón de texto plano -->
+    <style name="GetToDay.Button.Text" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/azul_medio</item>
+    </style>
+
+    <!-- Tarjeta blanca con sombra suave -->
+    <style name="GetToDay.Card" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/blanco</item>
+        <item name="cardCornerRadius">16dp</item>
+        <item name="cardElevation">4dp</item>
+        <item name="contentPadding">16dp</item>
+    </style>
+
+    <!-- Campo de texto outlined -->
+    <style name="GetToDay.Input" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/azul_medio</item>
+        <item name="hintTextColor">@color/texto_secundario</item>
+        <item name="boxCornerRadiusTopStart">12dp</item>
+        <item name="boxCornerRadiusTopEnd">12dp</item>
+        <item name="boxCornerRadiusBottomStart">12dp</item>
+        <item name="boxCornerRadiusBottomEnd">12dp</item>
+    </style>
+
+</resources>

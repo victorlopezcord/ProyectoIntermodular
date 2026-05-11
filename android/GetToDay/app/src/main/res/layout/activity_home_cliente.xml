@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fondo_pantalla"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="20dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="80dp">
+        <!--
+            paddingBottom="80dp": evita que el contenido
+            quede tapado por el menú inferior
+        -->
+
+        <!-- ── CARD: DATOS DEL CLIENTE ────────── -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/GetToDay.Card"
+            android:layout_marginBottom="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <!-- Fila: título + botón editar -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="16dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Mis datos"
+                        android:textSize="18sp"
+                        android:textColor="@color/azul_oscuro"
+                        android:textStyle="bold"/>
+
+                    <Button
+                        android:id="@+id/btnEditarPerfil"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Editar"
+                        style="@style/GetToDay.Button.Secondary"
+                        android:paddingHorizontal="16dp"/>
+
+                </LinearLayout>
+
+                <!-- Nombre -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Nombre"
+                        android:textSize="13sp"
+                        android:textColor="@color/texto_secundario"/>
+
+                    <TextView
+                        android:id="@+id/tvNombreCliente"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="—"
+                        android:textSize="14sp"
+                        android:textColor="@color/texto_primario"/>
+
+                </LinearLayout>
+
+                <!-- Email -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Email"
+                        android:textSize="13sp"
+                        android:textColor="@color/texto_secundario"/>
+
+                    <TextView
+                        android:id="@+id/tvEmailCliente"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="—"
+                        android:textSize="14sp"
+                        android:textColor="@color/texto_primario"/>
+
+                </LinearLayout>
+
+                <!-- Teléfono -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Teléfono"
+                        android:textSize="13sp"
+                        android:textColor="@color/texto_secundario"/>
+
+                    <TextView
+                        android:id="@+id/tvTelefonoCliente"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="—"
+                        android:textSize="14sp"
+                        android:textColor="@color/texto_primario"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- ── TÍTULO RESERVAS ─────────────────── -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mis reservas aceptadas"
+            android:textSize="18sp"
+            android:textColor="@color/azul_oscuro"
+            android:textStyle="bold"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- ── ESTADO VACÍO ───────────────────── -->
+        <!--
+            Se muestra cuando no hay reservas.
+            En Java: tvSinReservas.setVisibility(View.VISIBLE/GONE)
+        -->
+        <TextView
+            android:id="@+id/tvSinReservas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No tienes reservas aceptadas aún"
+            android:textSize="14sp"
+            android:textColor="@color/texto_secundario"
+            android:gravity="center"
+            android:paddingVertical="32dp"
+            android:visibility="gone"/>
+
+        <!-- ── LISTA DE RESERVAS ──────────────── -->
+        <!--
+            RecyclerView: lista eficiente de reservas.
+            Cada item usará item_reserva_cliente.xml
+            nestedScrollingEnabled="false": el scroll
+            lo gestiona el ScrollView padre
+        -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerReservas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"/>
+
+    </LinearLayout>
+</ScrollView>
