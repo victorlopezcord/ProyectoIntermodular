@@ -1,0 +1,37 @@
+# Android Studio / IntelliJ IDEA
+.idea/
+*.iml
+
+# Gradle
+.gradle/
+build/
+app/build/
+
+# Local configuration
+local.properties
+
+# Keystore files
+*.jks
+*.keystore
+
+# Generated files
+gen/
+out/
+
+# APK files
+*.apk
+*.aab
+*.ap_
+
+# Log files
+*.log
+
+# External native build
+.externalNativeBuild/
+.cxx/
+
+# MacOS
+.DS_Store
+
+# Captures
+captures/
