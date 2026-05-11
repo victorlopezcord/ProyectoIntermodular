@@ -52,6 +52,10 @@ dependencies {
     // Fragment: para los paneles internos de cliente y negocio
     implementation("androidx.fragment:fragment:1.8.1")
 
+    // Retrofit: para conectar con el backend
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
     // Tests (no tocar)
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
