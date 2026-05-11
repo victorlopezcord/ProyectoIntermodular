@@ -16,11 +16,8 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Date;
 
 /**
  *
@@ -35,8 +32,7 @@ import java.util.Date;
     @NamedQuery(name = "Usuarios.findByEmail", query = "SELECT u FROM Usuarios u WHERE u.email = :email"),
     @NamedQuery(name = "Usuarios.findByPasswordHash", query = "SELECT u FROM Usuarios u WHERE u.passwordHash = :passwordHash"),
     @NamedQuery(name = "Usuarios.findByTelefono", query = "SELECT u FROM Usuarios u WHERE u.telefono = :telefono"),
-    @NamedQuery(name = "Usuarios.findByRol", query = "SELECT u FROM Usuarios u WHERE u.rol = :rol"),
-    @NamedQuery(name = "Usuarios.findByFechaRegistro", query = "SELECT u FROM Usuarios u WHERE u.fechaRegistro = :fechaRegistro")})
+    @NamedQuery(name = "Usuarios.findByRol", query = "SELECT u FROM Usuarios u WHERE u.rol = :rol")})
 public class Usuarios implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -58,10 +54,7 @@ public class Usuarios implements Serializable {
     private String telefono;
     @Basic(optional = false)
     @Column(name = "rol")
-    private String rol;
-    @Column(name = "fecha_registro")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaRegistro;
+    private int rol;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCliente")
     private Collection<Citas> citasCollection;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "idUsuario")
@@ -74,7 +67,7 @@ public class Usuarios implements Serializable {
         this.idUsuario = idUsuario;
     }
 
-    public Usuarios(Integer idUsuario, String nombreCompleto, String email, String passwordHash, String rol) {
+    public Usuarios(Integer idUsuario, String nombreCompleto, String email, String passwordHash, int rol) {
         this.idUsuario = idUsuario;
         this.nombreCompleto = nombreCompleto;
         this.email = email;
@@ -122,20 +115,12 @@ public class Usuarios implements Serializable {
         this.telefono = telefono;
     }
 
-    public String getRol() {
+    public int getRol() {
         return rol;
     }
 
-    public void setRol(String rol) {
+    public void setRol(int rol) {
         this.rol = rol;
-    }
-
-    public Date getFechaRegistro() {
-        return fechaRegistro;
-    }
-
-    public void setFechaRegistro(Date fechaRegistro) {
-        this.fechaRegistro = fechaRegistro;
     }
 
     public Collection<Citas> getCitasCollection() {
@@ -176,7 +161,7 @@ public class Usuarios implements Serializable {
 
     @Override
     public String toString() {
-        return "GetToDay.demo.entity.Usuarios[ idUsuario=" + idUsuario + " ]";
+        return "GetToDay.entity.Usuarios[ idUsuario=" + idUsuario + " ]";
     }
     
 }

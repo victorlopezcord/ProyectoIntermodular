@@ -8,6 +8,7 @@
     <class>GetToDay.entity.Citas</class>
     <class>GetToDay.entity.Servicios</class>
     <class>GetToDay.entity.Horarios</class>
+    <class>GetToDay.entity.NewEntity</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://143.47.60.81:3306/get_today?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
       <property name="javax.persistence.jdbc.user" value="ocp"/>

@@ -30,8 +30,7 @@ import java.util.Collection;
     @NamedQuery(name = "Servicios.findAll", query = "SELECT s FROM Servicios s"),
     @NamedQuery(name = "Servicios.findByIdServicio", query = "SELECT s FROM Servicios s WHERE s.idServicio = :idServicio"),
     @NamedQuery(name = "Servicios.findByNombreServicio", query = "SELECT s FROM Servicios s WHERE s.nombreServicio = :nombreServicio"),
-    @NamedQuery(name = "Servicios.findByPrecio", query = "SELECT s FROM Servicios s WHERE s.precio = :precio"),
-    @NamedQuery(name = "Servicios.findByDuracionMinutos", query = "SELECT s FROM Servicios s WHERE s.duracionMinutos = :duracionMinutos")})
+    @NamedQuery(name = "Servicios.findByPrecio", query = "SELECT s FROM Servicios s WHERE s.precio = :precio")})
 public class Servicios implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,9 +45,6 @@ public class Servicios implements Serializable {
     @Basic(optional = false)
     @Column(name = "precio")
     private int precio;
-    @Basic(optional = false)
-    @Column(name = "duracion_minutos")
-    private int duracionMinutos;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idServicio")
     private Collection<Citas> citasCollection;
     @JoinColumn(name = "id_negocio", referencedColumnName = "id_negocio")
@@ -62,11 +58,10 @@ public class Servicios implements Serializable {
         this.idServicio = idServicio;
     }
 
-    public Servicios(Integer idServicio, String nombreServicio, int precio, int duracionMinutos) {
+    public Servicios(Integer idServicio, String nombreServicio, int precio) {
         this.idServicio = idServicio;
         this.nombreServicio = nombreServicio;
         this.precio = precio;
-        this.duracionMinutos = duracionMinutos;
     }
 
     public Integer getIdServicio() {
@@ -91,14 +86,6 @@ public class Servicios implements Serializable {
 
     public void setPrecio(int precio) {
         this.precio = precio;
-    }
-
-    public int getDuracionMinutos() {
-        return duracionMinutos;
-    }
-
-    public void setDuracionMinutos(int duracionMinutos) {
-        this.duracionMinutos = duracionMinutos;
     }
 
     public Collection<Citas> getCitasCollection() {
@@ -139,7 +126,7 @@ public class Servicios implements Serializable {
 
     @Override
     public String toString() {
-        return "GetToDay.demo.entity.Servicios[ idServicio=" + idServicio + " ]";
+        return "GetToDay.entity.Servicios[ idServicio=" + idServicio + " ]";
     }
     
 }

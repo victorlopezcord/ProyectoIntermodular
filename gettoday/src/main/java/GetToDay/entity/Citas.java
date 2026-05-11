@@ -50,9 +50,6 @@ public class Citas implements Serializable {
     private Date horaInicio;
     @Column(name = "estado")
     private String estado;
-    @JoinColumn(name = "id_empleado", referencedColumnName = "id_empleado")
-    @ManyToOne(optional = false)
-    private Empleados idEmpleado;
     @JoinColumn(name = "id_servicio", referencedColumnName = "id_servicio")
     @ManyToOne(optional = false)
     private Servicios idServicio;
@@ -105,14 +102,6 @@ public class Citas implements Serializable {
         this.estado = estado;
     }
 
-    public Empleados getIdEmpleado() {
-        return idEmpleado;
-    }
-
-    public void setIdEmpleado(Empleados idEmpleado) {
-        this.idEmpleado = idEmpleado;
-    }
-
     public Servicios getIdServicio() {
         return idServicio;
     }
@@ -151,7 +140,7 @@ public class Citas implements Serializable {
 
     @Override
     public String toString() {
-        return "GetToDay.demo.entity.Citas[ idCita=" + idCita + " ]";
+        return "GetToDay.entity.Citas[ idCita=" + idCita + " ]";
     }
     
 }

@@ -131,7 +131,7 @@ public class Horarios implements Serializable {
 
     @Override
     public String toString() {
-        return "GetToDay.demo.entity.Horarios[ idHorario=" + idHorario + " ]";
+        return "GetToDay.entity.Horarios[ idHorario=" + idHorario + " ]";
     }
     
 }

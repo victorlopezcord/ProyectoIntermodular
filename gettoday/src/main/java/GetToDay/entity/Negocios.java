@@ -4,7 +4,6 @@
  */
 package GetToDay.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Basic;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -53,10 +52,7 @@ public class Negocios implements Serializable {
     private Collection<Servicios> serviciosCollection;
     @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
     @OneToOne(optional = false)
-    @JsonIgnore
     private Usuarios idUsuario;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idNegocio")
-    private Collection<Empleados> empleadosCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idNegocio")
     private Collection<Horarios> horariosCollection;
 
@@ -120,14 +116,6 @@ public class Negocios implements Serializable {
         this.idUsuario = idUsuario;
     }
 
-    public Collection<Empleados> getEmpleadosCollection() {
-        return empleadosCollection;
-    }
-
-    public void setEmpleadosCollection(Collection<Empleados> empleadosCollection) {
-        this.empleadosCollection = empleadosCollection;
-    }
-
     public Collection<Horarios> getHorariosCollection() {
         return horariosCollection;
     }
@@ -158,7 +146,7 @@ public class Negocios implements Serializable {
 
     @Override
     public String toString() {
-        return "GetToDay.demo.entity.Negocios[ idNegocio=" + idNegocio + " ]";
+        return "GetToDay.entity.Negocios[ idNegocio=" + idNegocio + " ]";
     }
     
 }

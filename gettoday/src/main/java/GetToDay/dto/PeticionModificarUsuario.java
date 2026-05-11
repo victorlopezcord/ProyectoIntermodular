@@ -8,7 +8,7 @@ package GetToDay.dto;
  *
  * @author kiwitox
  */
-public class PeticionRegistro {
+public class PeticionModificarUsuario {
     private String nombre;
     private String email;
     private String telefono;
@@ -81,6 +81,20 @@ public class PeticionRegistro {
 
     public String getDescripcion() {
         return descripcion;
+    }
+    
+    public PeticionModificarUsuario() {
+    }
+
+    public PeticionModificarUsuario(String nombre, String email, String telefono, String password, int rol, String nombreLocal, String direccion, String descripcion) {
+        this.nombre = nombre;
+        this.email = email;
+        this.telefono = telefono;
+        this.password = password;
+        this.rol = rol;
+        this.nombreLocal = nombreLocal;
+        this.direccion = direccion;
+        this.descripcion = descripcion;
     }
     
 }
