@@ -1,30 +1,15 @@
 package com.grupo5.gettoday;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.grupo5.gettoday.databinding.ActivityHomeNegocioBinding;
 
 public class HomeNegocioActivity extends BaseActivity {
-
-    /*
-        HomeNegocioActivity extiende BaseActivity para
-        obtener el menú inferior.
-
-        RESPONSABILIDAD:
-          · Mostrar datos del negocio
-          · Mostrar citas confirmadas de HOY
-          · Mostrar citas confirmadas de MAÑANA
-
-        LLAMADAS AL BACKEND:
-          · GET /api/negocios/{id_negocio}
-          · GET /api/citas/negocio/{id_negocio}
-              ?estado=confirmada&fecha=hoy
-          · GET /api/citas/negocio/{id_negocio}
-              ?estado=confirmada&fecha=mañana
-    */
 
     private ActivityHomeNegocioBinding binding;
 
@@ -32,64 +17,51 @@ public class HomeNegocioActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityHomeNegocioBinding.inflate(
-                getLayoutInflater()
-        );
+        binding = ActivityHomeNegocioBinding.inflate(getLayoutInflater());
         getContenedor().addView(binding.getRoot());
 
-        // Mostrar menú del negocio con "Inicio" seleccionado
         mostrarMenuNegocio(R.id.navHome);
 
-        cargarDatosNegocio();
         configurarRecyclers();
         configurarBotones();
     }
 
-    /**
-     * Carga los datos del negocio.
-     * TODO: GET /api/negocios/{id_negocio}
-     */
-    private void cargarDatosNegocio() {
-        binding.tvNombreNegocio.setText("Nombre del negocio");
-        binding.tvDireccionNegocio.setText("Calle Ejemplo, 10");
-        binding.tvDescripcionNegocio.setText("Descripción del negocio");
+    // onResume se ejecuta cada vez que esta pantalla vuelve a ser visible,
+    // incluyendo cuando el usuario regresa desde PerfilNegocioActivity.
+    // Así los datos siempre están actualizados.
+    @Override
+    protected void onResume() {
+        super.onResume();
+        cargarDatosNegocio();
     }
 
-    /**
-     * Configura los dos RecyclerViews:
-     * uno para hoy y otro para mañana.
-     *
-     * TODO: conectar con la API:
-     *   · GET /api/citas/negocio/{id}?estado=confirmada&fecha=hoy
-     *   · GET /api/citas/negocio/{id}?estado=confirmada&fecha=mañana
-     */
-    private void configurarRecyclers() {
+    private void cargarDatosNegocio() {
+        SharedPreferences prefs = getSharedPreferences("MiAppPrefs", MODE_PRIVATE);
+        String nombre      = prefs.getString("negocio_nombre",       "");
+        String direccion   = prefs.getString("negocio_direccion",    "");
+        String descripcion = prefs.getString("negocio_descripcion",  "");
 
-        // RecyclerView de hoy
+        binding.tvNombreNegocio.setText(nombre);
+        binding.tvDireccionNegocio.setText(direccion);
+        binding.tvDescripcionNegocio.setText(descripcion);
+    }
+
+    private void configurarRecyclers() {
         binding.recyclerReservasHoy.setLayoutManager(
                 new LinearLayoutManager(this)
         );
-        // TODO: ReservaNegocioAdapter con citas de hoy
-        // Por ahora mostrar estado vacío
         binding.tvSinReservasHoy.setVisibility(View.VISIBLE);
 
-        // RecyclerView de mañana
         binding.recyclerReservasManana.setLayoutManager(
                 new LinearLayoutManager(this)
         );
-        // TODO: ReservaNegocioAdapter con citas de mañana
-        // Por ahora mostrar estado vacío
         binding.tvSinReservasManana.setVisibility(View.VISIBLE);
     }
 
     private void configurarBotones() {
-
-        // ── BOTÓN EDITAR NEGOCIO ──────────────────────────────────
-        binding.btnEditarNegocio.setOnClickListener(v -> {
-            Intent intent = new Intent(this,
-                    PerfilNegocioActivity.class);
-            startActivity(intent);
-        });
+        binding.btnEditarNegocio.setOnClickListener(v ->
+                startActivity(new Intent(this, PerfilNegocioActivity.class))
+        );
     }
 
     @Override

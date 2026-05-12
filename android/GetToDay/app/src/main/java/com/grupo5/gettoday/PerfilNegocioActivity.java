@@ -1,25 +1,20 @@
 package com.grupo5.gettoday;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 import com.grupo5.gettoday.databinding.ActivityPerfilNegocioBinding;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class PerfilNegocioActivity extends BaseActivity {
 
-    /*
-        PerfilNegocioActivity extiende BaseActivity para
-        obtener el toolbar y el menú inferior.
-
-        RESPONSABILIDAD:
-          · Mostrar datos del negocio y propietario en modo vista
-          · Permitir editar nombre, dirección, descripción del negocio
-          · Permitir editar nombre y teléfono del propietario
-          · Cerrar sesión y volver al Login
-    */
-
     private ActivityPerfilNegocioBinding binding;
+    private String emailUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,131 +23,127 @@ public class PerfilNegocioActivity extends BaseActivity {
         binding = ActivityPerfilNegocioBinding.inflate(getLayoutInflater());
         getContenedor().addView(binding.getRoot());
 
-        // Mostrar menú del negocio con "Perfil" seleccionado
         mostrarMenuNegocio(R.id.navPerfil);
 
+        SharedPreferences prefs = getSharedPreferences("MiAppPrefs", MODE_PRIVATE);
+        emailUsuario = prefs.getString("usuario_email", "");
 
-        cargarDatos();
+        cargarDatosDesdePrefs(prefs);
         configurarBotones();
     }
 
-    /**
-     * Carga los datos del negocio y propietario en modo vista.
-     * TODO: sustituir por GET /api/negocios/{id}
-     */
-    private void cargarDatos() {
-        // TODO: obtener datos reales desde la API
-        binding.tvNombreNegocioPerfil.setText("Nombre del negocio");
-        binding.tvDireccionNegocioPerfil.setText("Calle Ejemplo, 10");
-        binding.tvDescripcionNegocioPerfil.setText("Descripción del negocio");
-        binding.tvNombreUsuario.setText("Nombre del propietario");
-        binding.tvEmailUsuario.setText("negocio@email.com");
-        binding.tvTelefonoUsuario.setText("600 000 000");
+    private void cargarDatosDesdePrefs(SharedPreferences prefs) {
+        binding.tvNombreNegocioPerfil.setText(prefs.getString("negocio_nombre",      ""));
+        binding.tvDireccionNegocioPerfil.setText(prefs.getString("negocio_direccion",   ""));
+        binding.tvDescripcionNegocioPerfil.setText(prefs.getString("negocio_descripcion", ""));
+
+        binding.tvNombreUsuario.setText(prefs.getString("usuario_nombre",   ""));
+        binding.tvEmailUsuario.setText(prefs.getString("usuario_email",     ""));
+        binding.tvTelefonoUsuario.setText(prefs.getString("usuario_telefono", ""));
     }
 
     private void configurarBotones() {
 
-        // ── BOTÓN EDITAR ──────────────────────────────────────────
         binding.btnEditar.setOnClickListener(v -> {
+            binding.etNombreNegocioEditar.setText(binding.tvNombreNegocioPerfil.getText().toString());
+            binding.etDireccionEditar.setText(binding.tvDireccionNegocioPerfil.getText().toString());
+            binding.etDescripcionEditar.setText(binding.tvDescripcionNegocioPerfil.getText().toString());
+            binding.etNombreUsuarioEditar.setText(binding.tvNombreUsuario.getText().toString());
+            binding.etTelefonoEditar.setText(binding.tvTelefonoUsuario.getText().toString());
 
-            // Rellenar campos editables con datos actuales
-            binding.etNombreNegocioEditar.setText(
-                    binding.tvNombreNegocioPerfil.getText().toString()
-            );
-            binding.etDireccionEditar.setText(
-                    binding.tvDireccionNegocioPerfil.getText().toString()
-            );
-            binding.etDescripcionEditar.setText(
-                    binding.tvDescripcionNegocioPerfil.getText().toString()
-            );
-            binding.etNombreUsuarioEditar.setText(
-                    binding.tvNombreUsuario.getText().toString()
-            );
-            binding.etTelefonoEditar.setText(
-                    binding.tvTelefonoUsuario.getText().toString()
-            );
-
-            // Ocultar vista y mostrar edición con animación
             binding.cardVista.setVisibility(View.GONE);
             binding.cardEdicion.setVisibility(View.VISIBLE);
             binding.cardEdicion.setAlpha(0f);
             binding.cardEdicion.animate().alpha(1f).setDuration(300).start();
         });
 
-        // ── BOTÓN CANCELAR ────────────────────────────────────────
         binding.btnCancelar.setOnClickListener(v -> {
-
-            // Volver al modo vista sin guardar
             binding.cardEdicion.setVisibility(View.GONE);
             binding.cardVista.setVisibility(View.VISIBLE);
-
-            // Limpiar errores
             binding.layoutNombreNegocioEditar.setError(null);
             binding.layoutDireccionEditar.setError(null);
             binding.layoutNombreUsuarioEditar.setError(null);
             binding.layoutTelefonoEditar.setError(null);
         });
 
-        // ── BOTÓN GUARDAR ─────────────────────────────────────────
         binding.btnGuardar.setOnClickListener(v -> {
+            if (!validarFormulario()) return;
 
-            if (validarFormulario()) {
+            String nuevoNombreNegocio = binding.etNombreNegocioEditar.getText().toString().trim();
+            String nuevaDireccion     = binding.etDireccionEditar.getText().toString().trim();
+            String nuevaDescripcion   = binding.etDescripcionEditar.getText().toString().trim();
+            String nuevoNombreUsuario = binding.etNombreUsuarioEditar.getText().toString().trim();
+            String nuevoTelefono      = binding.etTelefonoEditar.getText().toString().trim();
 
-                String nuevoNombreNegocio = binding.etNombreNegocioEditar
-                        .getText().toString().trim();
-                String nuevaDireccion = binding.etDireccionEditar
-                        .getText().toString().trim();
-                String nuevaDescripcion = binding.etDescripcionEditar
-                        .getText().toString().trim();
-                String nuevoNombreUsuario = binding.etNombreUsuarioEditar
-                        .getText().toString().trim();
-                String nuevoTelefono = binding.etTelefonoEditar
-                        .getText().toString().trim();
+            binding.btnGuardar.setEnabled(false);
 
-                // TODO: llamar a PUT /api/negocios/{id} con:
-                //   · nombreLocal = nuevoNombreNegocio
-                //   · direccion   = nuevaDireccion
-                //   · descripcion = nuevaDescripcion
+            PeticionModificarUsuario peticion = new PeticionModificarUsuario(
+                    nuevoNombreUsuario, emailUsuario, nuevoTelefono,
+                    "",  // sin cambio de contraseña
+                    1,   // rol NEGOCIO
+                    nuevoNombreNegocio, nuevaDireccion, nuevaDescripcion
+            );
 
-                // TODO: llamar a PUT /api/usuarios/{id} con:
-                //   · nombre   = nuevoNombreUsuario
-                //   · telefono = nuevoTelefono
+            ApiService api = ApiClient.getClient().create(ApiService.class);
+            api.modificarUsuario(peticion).enqueue(new Callback<RespuestaGeneral>() {
 
-                // Actualizar datos en modo vista
-                binding.tvNombreNegocioPerfil.setText(nuevoNombreNegocio);
-                binding.tvDireccionNegocioPerfil.setText(nuevaDireccion);
-                binding.tvDescripcionNegocioPerfil.setText(nuevaDescripcion);
-                binding.tvNombreUsuario.setText(nuevoNombreUsuario);
-                binding.tvTelefonoUsuario.setText(nuevoTelefono);
+                @Override
+                public void onResponse(Call<RespuestaGeneral> call,
+                                       Response<RespuestaGeneral> response) {
+                    binding.btnGuardar.setEnabled(true);
 
-                // Volver al modo vista
-                binding.cardEdicion.setVisibility(View.GONE);
-                binding.cardVista.setVisibility(View.VISIBLE);
+                    if (response.isSuccessful() && response.body() != null
+                            && response.body().isExito()) {
 
-                Toast.makeText(this,
-                        "Datos actualizados correctamente",
-                        Toast.LENGTH_SHORT).show();
-            }
+                        binding.tvNombreNegocioPerfil.setText(nuevoNombreNegocio);
+                        binding.tvDireccionNegocioPerfil.setText(nuevaDireccion);
+                        binding.tvDescripcionNegocioPerfil.setText(nuevaDescripcion);
+                        binding.tvNombreUsuario.setText(nuevoNombreUsuario);
+                        binding.tvTelefonoUsuario.setText(nuevoTelefono);
+
+                        getSharedPreferences("MiAppPrefs", MODE_PRIVATE).edit()
+                                .putString("negocio_nombre",      nuevoNombreNegocio)
+                                .putString("negocio_direccion",   nuevaDireccion)
+                                .putString("negocio_descripcion", nuevaDescripcion)
+                                .putString("usuario_nombre",      nuevoNombreUsuario)
+                                .putString("usuario_telefono",    nuevoTelefono)
+                                .apply();
+
+                        binding.cardEdicion.setVisibility(View.GONE);
+                        binding.cardVista.setVisibility(View.VISIBLE);
+
+                        Toast.makeText(PerfilNegocioActivity.this,
+                                "Datos actualizados correctamente", Toast.LENGTH_SHORT).show();
+                    } else {
+                        String msg = response.body() != null
+                                ? response.body().getMensaje() : "Error al guardar";
+                        Toast.makeText(PerfilNegocioActivity.this,
+                                msg, Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<RespuestaGeneral> call, Throwable t) {
+                    binding.btnGuardar.setEnabled(true);
+                    Toast.makeText(PerfilNegocioActivity.this,
+                            "Sin conexión: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
         });
 
-        // ── BOTÓN CERRAR SESIÓN ───────────────────────────────────
+        // ── CERRAR SESIÓN: solo borra email y rol, NO los datos del perfil ──
         binding.btnCerrarSesion.setOnClickListener(v -> {
+            getSharedPreferences("MiAppPrefs", MODE_PRIVATE).edit()
+                    .remove("usuario_email")
+                    .remove("usuario_rol")
+                    .apply();
 
-            // TODO: borrar token de sesión de SharedPreferences
-
-            // Navegar al Login limpiando toda la pila de Activities
             Intent intent = new Intent(this, LoginActivity.class);
-            intent.setFlags(
-                    Intent.FLAG_ACTIVITY_NEW_TASK |
-                            Intent.FLAG_ACTIVITY_CLEAR_TASK
-            );
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         });
     }
 
-    /**
-     * Valida que los campos obligatorios estén rellenos.
-     */
     private boolean validarFormulario() {
         boolean valido = true;
 

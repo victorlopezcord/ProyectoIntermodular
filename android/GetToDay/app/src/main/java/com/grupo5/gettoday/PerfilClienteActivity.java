@@ -1,24 +1,20 @@
 package com.grupo5.gettoday;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 import com.grupo5.gettoday.databinding.ActivityPerfilClienteBinding;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class PerfilClienteActivity extends BaseActivity {
 
-    /*
-        PerfilClienteActivity extiende BaseActivity para
-        obtener el toolbar y el menú inferior.
-
-        RESPONSABILIDAD:
-          · Mostrar datos del cliente en modo vista
-          · Permitir editar nombre y teléfono
-          · Cerrar sesión y volver al Login
-    */
-
     private ActivityPerfilClienteBinding binding;
+    private String emailUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,66 +23,48 @@ public class PerfilClienteActivity extends BaseActivity {
         binding = ActivityPerfilClienteBinding.inflate(getLayoutInflater());
         getContenedor().addView(binding.getRoot());
 
-        // Mostrar menú del cliente con "Perfil" seleccionado
         mostrarMenuCliente(R.id.navPerfil);
 
+        SharedPreferences prefs = getSharedPreferences("MiAppPrefs", MODE_PRIVATE);
+        emailUsuario = prefs.getString("usuario_email", "");
 
-        cargarDatosCliente();
+        cargarDatosDesdePrefs(prefs);
         configurarBotones();
     }
 
-    /**
-     * Carga los datos del cliente en modo vista.
-     * TODO: sustituir por GET /api/clientes/{id}
-     */
-    private void cargarDatosCliente() {
-        // TODO: obtener datos reales del cliente desde la API
-        binding.tvNombrePerfil.setText("Nombre del cliente");
-        binding.tvEmailPerfil.setText("cliente@email.com");
-        binding.tvTelefonoPerfil.setText("600 000 000");
+    private void cargarDatosDesdePrefs(SharedPreferences prefs) {
+        String nombre   = prefs.getString("usuario_nombre",   "");
+        String email    = prefs.getString("usuario_email",    "");
+        String telefono = prefs.getString("usuario_telefono", "");
+
+        binding.tvNombrePerfil.setText(nombre);
+        binding.tvEmailPerfil.setText(email);
+        binding.tvTelefonoPerfil.setText(telefono);
     }
 
     private void configurarBotones() {
 
-        // ── BOTÓN EDITAR ──────────────────────────────────────────
         binding.btnEditar.setOnClickListener(v -> {
+            binding.etNombreEditar.setText(binding.tvNombrePerfil.getText().toString());
+            binding.etTelefonoEditar.setText(binding.tvTelefonoPerfil.getText().toString());
 
-            // Rellenar los campos editables con los datos actuales
-            binding.etNombreEditar.setText(
-                    binding.tvNombrePerfil.getText().toString()
-            );
-            binding.etTelefonoEditar.setText(
-                    binding.tvTelefonoPerfil.getText().toString()
-            );
-
-            // Ocultar card de vista y mostrar card de edición
             binding.cardVista.setVisibility(View.GONE);
             binding.cardEdicion.setVisibility(View.VISIBLE);
             binding.cardEdicion.setAlpha(0f);
             binding.cardEdicion.animate().alpha(1f).setDuration(300).start();
         });
 
-        // ── BOTÓN CANCELAR ────────────────────────────────────────
         binding.btnCancelar.setOnClickListener(v -> {
-
-            // Volver al modo vista sin guardar cambios
             binding.cardEdicion.setVisibility(View.GONE);
             binding.cardVista.setVisibility(View.VISIBLE);
-
-            // Limpiar errores si los había
             binding.layoutNombreEditar.setError(null);
             binding.layoutTelefonoEditar.setError(null);
         });
 
-        // ── BOTÓN GUARDAR ─────────────────────────────────────────
         binding.btnGuardar.setOnClickListener(v -> {
+            String nuevoNombre   = binding.etNombreEditar.getText().toString().trim();
+            String nuevoTelefono = binding.etTelefonoEditar.getText().toString().trim();
 
-            String nuevoNombre = binding.etNombreEditar
-                    .getText().toString().trim();
-            String nuevoTelefono = binding.etTelefonoEditar
-                    .getText().toString().trim();
-
-            // Validar campos
             if (nuevoNombre.isEmpty()) {
                 binding.layoutNombreEditar.setError("Introduce tu nombre");
                 return;
@@ -95,40 +73,68 @@ public class PerfilClienteActivity extends BaseActivity {
                 binding.layoutTelefonoEditar.setError("Introduce tu teléfono");
                 return;
             }
-
             binding.layoutNombreEditar.setError(null);
             binding.layoutTelefonoEditar.setError(null);
 
-            // TODO: llamar a PUT /api/clientes/{id} con:
-            //   · nombre = nuevoNombre
-            //   · telefono = nuevoTelefono
+            binding.btnGuardar.setEnabled(false);
 
-            // Actualizar los datos en modo vista
-            binding.tvNombrePerfil.setText(nuevoNombre);
-            binding.tvTelefonoPerfil.setText(nuevoTelefono);
+            PeticionModificarUsuario peticion = new PeticionModificarUsuario(
+                    nuevoNombre, emailUsuario, nuevoTelefono,
+                    "",   // sin cambio de contraseña
+                    0,    // rol CLIENTE
+                    null, null, null
+            );
 
-            // Volver al modo vista
-            binding.cardEdicion.setVisibility(View.GONE);
-            binding.cardVista.setVisibility(View.VISIBLE);
+            ApiService api = ApiClient.getClient().create(ApiService.class);
+            api.modificarUsuario(peticion).enqueue(new Callback<RespuestaGeneral>() {
 
-            Toast.makeText(this,
-                    "Datos actualizados correctamente",
-                    Toast.LENGTH_SHORT).show();
+                @Override
+                public void onResponse(Call<RespuestaGeneral> call,
+                                       Response<RespuestaGeneral> response) {
+                    binding.btnGuardar.setEnabled(true);
+
+                    if (response.isSuccessful() && response.body() != null
+                            && response.body().isExito()) {
+
+                        binding.tvNombrePerfil.setText(nuevoNombre);
+                        binding.tvTelefonoPerfil.setText(nuevoTelefono);
+
+                        getSharedPreferences("MiAppPrefs", MODE_PRIVATE).edit()
+                                .putString("usuario_nombre",   nuevoNombre)
+                                .putString("usuario_telefono", nuevoTelefono)
+                                .apply();
+
+                        binding.cardEdicion.setVisibility(View.GONE);
+                        binding.cardVista.setVisibility(View.VISIBLE);
+
+                        Toast.makeText(PerfilClienteActivity.this,
+                                "Datos actualizados correctamente", Toast.LENGTH_SHORT).show();
+                    } else {
+                        String msg = response.body() != null
+                                ? response.body().getMensaje() : "Error al guardar";
+                        Toast.makeText(PerfilClienteActivity.this,
+                                msg, Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<RespuestaGeneral> call, Throwable t) {
+                    binding.btnGuardar.setEnabled(true);
+                    Toast.makeText(PerfilClienteActivity.this,
+                            "Sin conexión: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
         });
 
-        // ── BOTÓN CERRAR SESIÓN ───────────────────────────────────
+        // ── CERRAR SESIÓN: solo borra email y rol, NO los datos del perfil ──
         binding.btnCerrarSesion.setOnClickListener(v -> {
+            getSharedPreferences("MiAppPrefs", MODE_PRIVATE).edit()
+                    .remove("usuario_email")
+                    .remove("usuario_rol")
+                    .apply();
 
-            // TODO: borrar token de sesión de SharedPreferences
-
-            // Navegar al Login limpiando toda la pila de Activities
-            // FLAG_ACTIVITY_NEW_TASK | FLAG_ACTIVITY_CLEAR_TASK:
-            // el usuario no puede volver atrás pulsando Back
             Intent intent = new Intent(this, LoginActivity.class);
-            intent.setFlags(
-                    Intent.FLAG_ACTIVITY_NEW_TASK |
-                            Intent.FLAG_ACTIVITY_CLEAR_TASK
-            );
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         });
     }
