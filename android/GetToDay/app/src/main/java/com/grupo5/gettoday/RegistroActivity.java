@@ -41,23 +41,21 @@ public class RegistroActivity extends AppCompatActivity {
 
     private void configurarBotones() {
 
-        // ── BOTÓN VOLVER ──────────────────────────────────────────
         binding.btnVolver.setOnClickListener(v -> finish());
 
-        // ── BOTÓN CREAR CUENTA ────────────────────────────────────
         binding.btnCrearCuenta.setOnClickListener(v -> {
             if (!validarFormulario()) return;
 
-            // Recoger valores del formulario
             String nombre   = binding.etNombre.getText().toString().trim();
             String email    = binding.etEmail.getText().toString().trim();
             String telefono = binding.etTelefono.getText().toString().trim();
             String password = binding.etPassword.getText().toString();
 
-            // Determinar rol: 1 = NEGOCIO, 0 = CLIENTE
-            int rol = (binding.toggleRol.getCheckedButtonId() == R.id.btnRolNegocio) ? 1 : 0;
+            int rol = 0;
+            if (binding.toggleRol.getCheckedButtonId() == R.id.btnRolNegocio) {
+                rol = 1;
+            }
 
-            // Datos de negocio solo si es negocio
             String nombreLocal = null;
             String direccion   = null;
             String descripcion = null;
@@ -67,7 +65,6 @@ public class RegistroActivity extends AppCompatActivity {
                 descripcion = binding.etDescripcion.getText().toString().trim();
             }
 
-            // Guardamos referencias finales para usarlas dentro del callback
             final String fNombre      = nombre;
             final String fEmail       = email;
             final String fTelefono    = telefono;
@@ -95,25 +92,38 @@ public class RegistroActivity extends AppCompatActivity {
                         RespuestaGeneral res = response.body();
                         if (res.isExito()) {
 
-                            // ── GUARDAR DATOS EN SHAREDPREFERENCES ──────────
-                            // Así cuando el usuario haga login, los datos ya
-                            // están disponibles sin necesitar otra llamada al servidor.
+                            // Guardar datos en SharedPreferences para no tener que
+                            // pedirlos de nuevo al servidor cuando el usuario inicie sesion
                             SharedPreferences prefs = getSharedPreferences("MiAppPrefs", MODE_PRIVATE);
+
+                            String nombreLocalGuardar = "";
+                            String direccionGuardar   = "";
+                            String descripcionGuardar = "";
+
+                            if (fNombreLocal != null) {
+                                nombreLocalGuardar = fNombreLocal;
+                            }
+                            if (fDireccion != null) {
+                                direccionGuardar = fDireccion;
+                            }
+                            if (fDescripcion != null) {
+                                descripcionGuardar = fDescripcion;
+                            }
+
                             prefs.edit()
-                                    .putString("usuario_email",       fEmail)
-                                    .putInt(   "usuario_rol",         fRol)
-                                    .putString("usuario_nombre",      fNombre)
-                                    .putString("usuario_telefono",    fTelefono)
-                                    .putString("negocio_nombre",      fNombreLocal != null ? fNombreLocal : "")
-                                    .putString("negocio_direccion",   fDireccion   != null ? fDireccion   : "")
-                                    .putString("negocio_descripcion", fDescripcion != null ? fDescripcion : "")
+                                    .putString("usuario_email",                  fEmail)
+                                    .putInt(   "usuario_rol",                    fRol)
+                                    .putString("usuario_nombre_"      + fEmail,  fNombre)
+                                    .putString("usuario_telefono_"    + fEmail,  fTelefono)
+                                    .putString("negocio_nombre_"      + fEmail,  nombreLocalGuardar)
+                                    .putString("negocio_direccion_"   + fEmail,  direccionGuardar)
+                                    .putString("negocio_descripcion_" + fEmail,  descripcionGuardar)
                                     .apply();
-                            // ────────────────────────────────────────────────
 
                             Toast.makeText(RegistroActivity.this,
                                     "Cuenta creada correctamente. ¡Ya puedes iniciar sesión!",
                                     Toast.LENGTH_LONG).show();
-                            finish(); // Volver a la pantalla de Login
+                            finish();
                         } else {
                             Toast.makeText(RegistroActivity.this,
                                     res.getMensaje(), Toast.LENGTH_SHORT).show();

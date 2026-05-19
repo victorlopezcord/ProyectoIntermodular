@@ -33,9 +33,9 @@ public class PerfilClienteActivity extends BaseActivity {
     }
 
     private void cargarDatosDesdePrefs(SharedPreferences prefs) {
-        String nombre   = prefs.getString("usuario_nombre",   "");
+        String nombre   = prefs.getString("usuario_nombre_"   + emailUsuario, "");
         String email    = prefs.getString("usuario_email",    "");
-        String telefono = prefs.getString("usuario_telefono", "");
+        String telefono = prefs.getString("usuario_telefono_" + emailUsuario, "");
 
         binding.tvNombrePerfil.setText(nombre);
         binding.tvEmailPerfil.setText(email);
@@ -100,8 +100,8 @@ public class PerfilClienteActivity extends BaseActivity {
                         binding.tvTelefonoPerfil.setText(nuevoTelefono);
 
                         getSharedPreferences("MiAppPrefs", MODE_PRIVATE).edit()
-                                .putString("usuario_nombre",   nuevoNombre)
-                                .putString("usuario_telefono", nuevoTelefono)
+                                .putString("usuario_nombre_"   + emailUsuario, nuevoNombre)
+                                .putString("usuario_telefono_" + emailUsuario, nuevoTelefono)
                                 .apply();
 
                         binding.cardEdicion.setVisibility(View.GONE);
@@ -126,7 +126,7 @@ public class PerfilClienteActivity extends BaseActivity {
             });
         });
 
-        // ── CERRAR SESIÓN: solo borra email y rol, NO los datos del perfil ──
+        // ── CERRAR SESIÓN: solo borra email y rol, los datos quedan ligados al correo ──
         binding.btnCerrarSesion.setOnClickListener(v -> {
             getSharedPreferences("MiAppPrefs", MODE_PRIVATE).edit()
                     .remove("usuario_email")

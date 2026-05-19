@@ -18,19 +18,8 @@ public class RespuestaLogin {
 
     public RespuestaLogin() { }
 
-    public int getId() {
-        return id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getRol() {
-        return rol;
-    }
+    public int getId()        { return id; }
+    public String getNombre() { return nombre; }
+    public String getEmail()  { return email; }
+    public String getRol()    { return rol; }
 }

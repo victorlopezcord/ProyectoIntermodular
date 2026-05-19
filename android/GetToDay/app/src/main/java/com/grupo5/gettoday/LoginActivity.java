@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,11 +45,11 @@ public class LoginActivity extends AppCompatActivity {
         layoutPassword.setError(null);
 
         String email = "";
+        String password = "";
+
         if (etEmail.getText() != null) {
             email = etEmail.getText().toString().trim();
         }
-
-        String password = "";
         if (etPassword.getText() != null) {
             password = etPassword.getText().toString().trim();
         }
@@ -62,15 +63,13 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        hacerLogin(email, password);
-    }
-
-    private void hacerLogin(String email, String password) {
         btnLogin.setEnabled(false);
 
-        ApiService api = ApiClient.getClient().create(ApiService.class);
-        api.login(new PeticionLogin(email, password)).enqueue(new Callback<RespuestaGeneral>() {
+        final String emailFinal = email;
+        final String passwordFinal = password;
 
+        ApiService api = ApiClient.getClient().create(ApiService.class);
+        api.login(new PeticionLogin(emailFinal, passwordFinal)).enqueue(new Callback<RespuestaGeneral>() {
             @Override
             public void onResponse(Call<RespuestaGeneral> call, Response<RespuestaGeneral> response) {
                 btnLogin.setEnabled(true);
@@ -87,16 +86,15 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
 
-                int rol = ((Number) res.getDatos()).intValue();
-                SharedPreferences prefs = getSharedPreferences("MiAppPrefs", MODE_PRIVATE);
+                int rol = ((JsonElement) res.getDatos()).getAsInt();
 
+                SharedPreferences prefs = getSharedPreferences("MiAppPrefs", MODE_PRIVATE);
                 prefs.edit()
-                        .putString("usuario_email", email)
+                        .putString("usuario_email", emailFinal)
                         .putInt("usuario_rol", rol)
                         .apply();
 
-                // Cargar los datos del perfil del servidor
-                cargarDatosUsuario(email, rol, prefs);
+                cargarDatosUsuario(emailFinal, rol, prefs);
             }
 
             @Override
@@ -111,47 +109,26 @@ public class LoginActivity extends AppCompatActivity {
     private void cargarDatosUsuario(String email, int rol, SharedPreferences prefs) {
         ApiService api = ApiClient.getClient().create(ApiService.class);
         api.obtenerUsuario(new PeticionEmail(email)).enqueue(new Callback<RespuestaGeneral>() {
-
             @Override
             public void onResponse(Call<RespuestaGeneral> call, Response<RespuestaGeneral> response) {
                 if (response.isSuccessful() && response.body() != null && response.body().isExito()) {
-
-                    // Convertimos los datos de la respuesta a DatosUsuario
                     Gson gson = new Gson();
-                    DatosUsuario datos = gson.fromJson(gson.toJson(response.body().getDatos()), DatosUsuario.class);
+                    String json = gson.toJson(response.body().getDatos());
+                    DatosUsuario datos = gson.fromJson(json, DatosUsuario.class);
 
                     if (datos != null) {
-                        String nombre = "";
-                        if (datos.getNombre() != null) {
-                            nombre = datos.getNombre();
-                        }
-
-                        String telefono = "";
-                        if (datos.getTelefono() != null) {
-                            telefono = datos.getTelefono();
-                        }
-
-                        String negocioNombre = "";
-                        if (datos.getNombreLocal() != null) {
-                            negocioNombre = datos.getNombreLocal();
-                        }
-
-                        String negocioDireccion = "";
-                        if (datos.getDireccion() != null) {
-                            negocioDireccion = datos.getDireccion();
-                        }
-
-                        String negocioDescripcion = "";
-                        if (datos.getDescripcion() != null) {
-                            negocioDescripcion = datos.getDescripcion();
-                        }
+                        String nombre = datos.getNombre() != null ? datos.getNombre() : "";
+                        String telefono = datos.getTelefono() != null ? datos.getTelefono() : "";
+                        String nombreLocal = datos.getNombreLocal() != null ? datos.getNombreLocal() : "";
+                        String direccion = datos.getDireccion() != null ? datos.getDireccion() : "";
+                        String descripcion = datos.getDescripcion() != null ? datos.getDescripcion() : "";
 
                         prefs.edit()
-                                .putString("usuario_nombre",      nombre)
-                                .putString("usuario_telefono",    telefono)
-                                .putString("negocio_nombre",      negocioNombre)
-                                .putString("negocio_direccion",   negocioDireccion)
-                                .putString("negocio_descripcion", negocioDescripcion)
+                                .putString("usuario_nombre_"      + email, nombre)
+                                .putString("usuario_telefono_"    + email, telefono)
+                                .putString("negocio_nombre_"      + email, nombreLocal)
+                                .putString("negocio_direccion_"   + email, direccion)
+                                .putString("negocio_descripcion_" + email, descripcion)
                                 .apply();
                     }
                 }

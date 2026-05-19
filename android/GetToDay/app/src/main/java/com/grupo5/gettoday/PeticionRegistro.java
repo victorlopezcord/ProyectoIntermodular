@@ -45,35 +45,12 @@ public class PeticionRegistro {
         this.descripcion = descripcion;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public int getRol() {
-        return rol;
-    }
-
-    public String getNombreLocal() {
-        return nombreLocal;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
+    public String getNombre()      { return nombre; }
+    public String getEmail()       { return email; }
+    public String getTelefono()    { return telefono; }
+    public String getPassword()    { return password; }
+    public int    getRol()         { return rol; }
+    public String getNombreLocal() { return nombreLocal; }
+    public String getDireccion()   { return direccion; }
+    public String getDescripcion() { return descripcion; }
 }

@@ -33,13 +33,13 @@ public class PerfilNegocioActivity extends BaseActivity {
     }
 
     private void cargarDatosDesdePrefs(SharedPreferences prefs) {
-        binding.tvNombreNegocioPerfil.setText(prefs.getString("negocio_nombre",      ""));
-        binding.tvDireccionNegocioPerfil.setText(prefs.getString("negocio_direccion",   ""));
-        binding.tvDescripcionNegocioPerfil.setText(prefs.getString("negocio_descripcion", ""));
+        binding.tvNombreNegocioPerfil.setText(prefs.getString("negocio_nombre_"      + emailUsuario, ""));
+        binding.tvDireccionNegocioPerfil.setText(prefs.getString("negocio_direccion_"   + emailUsuario, ""));
+        binding.tvDescripcionNegocioPerfil.setText(prefs.getString("negocio_descripcion_" + emailUsuario, ""));
 
-        binding.tvNombreUsuario.setText(prefs.getString("usuario_nombre",   ""));
+        binding.tvNombreUsuario.setText(prefs.getString("usuario_nombre_"   + emailUsuario, ""));
         binding.tvEmailUsuario.setText(prefs.getString("usuario_email",     ""));
-        binding.tvTelefonoUsuario.setText(prefs.getString("usuario_telefono", ""));
+        binding.tvTelefonoUsuario.setText(prefs.getString("usuario_telefono_" + emailUsuario, ""));
     }
 
     private void configurarBotones() {
@@ -102,11 +102,11 @@ public class PerfilNegocioActivity extends BaseActivity {
                         binding.tvTelefonoUsuario.setText(nuevoTelefono);
 
                         getSharedPreferences("MiAppPrefs", MODE_PRIVATE).edit()
-                                .putString("negocio_nombre",      nuevoNombreNegocio)
-                                .putString("negocio_direccion",   nuevaDireccion)
-                                .putString("negocio_descripcion", nuevaDescripcion)
-                                .putString("usuario_nombre",      nuevoNombreUsuario)
-                                .putString("usuario_telefono",    nuevoTelefono)
+                                .putString("negocio_nombre_"      + emailUsuario, nuevoNombreNegocio)
+                                .putString("negocio_direccion_"   + emailUsuario, nuevaDireccion)
+                                .putString("negocio_descripcion_" + emailUsuario, nuevaDescripcion)
+                                .putString("usuario_nombre_"      + emailUsuario, nuevoNombreUsuario)
+                                .putString("usuario_telefono_"    + emailUsuario, nuevoTelefono)
                                 .apply();
 
                         binding.cardEdicion.setVisibility(View.GONE);
@@ -131,7 +131,7 @@ public class PerfilNegocioActivity extends BaseActivity {
             });
         });
 
-        // ── CERRAR SESIÓN: solo borra email y rol, NO los datos del perfil ──
+        // ── CERRAR SESIÓN: solo borra email y rol, los datos quedan ligados al correo ──
         binding.btnCerrarSesion.setOnClickListener(v -> {
             getSharedPreferences("MiAppPrefs", MODE_PRIVATE).edit()
                     .remove("usuario_email")
